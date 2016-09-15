@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SSU.Prediploma.GraphDrawer;
 
 namespace SSU.Prediploma.OnlyPlanar
 {
@@ -23,6 +24,17 @@ namespace SSU.Prediploma.OnlyPlanar
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void OnCreateGraphClick(object sender, RoutedEventArgs e)
+        {
+            int fl;
+            DrawMyGraph graphDrawer = new DrawMyGraph(textBox.Text.Split(new[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries).Select(s => int.Parse(s)).ToArray(), 2, out fl);
+            image.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+                graphDrawer.picture.GetHbitmap(),
+                IntPtr.Zero,
+                System.Windows.Int32Rect.Empty,
+                BitmapSizeOptions.FromWidthAndHeight(graphDrawer.picture.Width, graphDrawer.picture.Height));
         }
     }
 }
